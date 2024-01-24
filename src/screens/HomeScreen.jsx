@@ -5,9 +5,8 @@ import Categories from '../components/Categories'
 import OfferSlider from '../components/OfferSlider'
 import { Ionicons } from '@expo/vector-icons';
 import { title, colors } from "../global/style";
-// import firestore from "@react-native-firebase/firestore"
 import { db, storage } from "../Firebase/FirebaseConfig";
-import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { collection, addDoc, getDocs, onSnapshot } from 'firebase/firestore';
 import CardSlider from '../components/CardSlider'
 
 const HomeScreen = ({navigation}) => {
@@ -19,26 +18,20 @@ const HomeScreen = ({navigation}) => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const foodCollectionRef = await collection(db, 'FoodData');
-        const Snapshot = await getDocs(foodCollectionRef);
-
+    const foodCollectionRef = collection(db, 'FoodData');
+    const fetchData = onSnapshot(foodCollectionRef, (snapshot) => {
         const foodDataList = [];
-        Snapshot.forEach((doc) => {
-          foodDataList.push({ id: doc.id, ...doc.data() });
+        snapshot.forEach((doc) => {
+            foodDataList.push({ id: doc.id, ...doc.data() });
         });
-        // console.log("list", foodDataList);
         setFoodData(foodDataList);
-      } catch (error) {
+    }, (error) => {
         console.error('Error fetching food data: ', error);
-      }
-    };
-    fetchData();
+    });
 
-    // foodRef.onSnapshot(snapshot=>{
-    //   setFoodData(snapshot.docs.map(doc => doc.data()))
-    // })
+    return () => {
+        fetchData();
+    };
     
   }, [])
 
@@ -46,11 +39,6 @@ const HomeScreen = ({navigation}) => {
     setVegData(foodData.filter(item => item.foodType == "veg"));
     setNonVegData(foodData.filter(item => item.foodType == "non-veg"))
   }, [foodData])
-
-  // console.log("food",foodData);
-  // console.log("veg",VegData);
-  // console.log("non veg", NonVegData);
-  // console.log(search);
 
   return (
     <ScrollView style={styles.container}>

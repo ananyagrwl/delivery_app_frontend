@@ -29,7 +29,6 @@ export const Profile = ({ navigation }) => {
 
     // console.log("user logged uid", userlogged?.uid);
 
-
     useEffect(() => {
         const getUserData = async () => {
             // console.log("Inside getUserData");
@@ -40,7 +39,7 @@ export const Profile = ({ navigation }) => {
                 // console.log("Collected ref in doc");
                 if (!doc.empty) {
                     doc.forEach((doc => {
-                        // console.log("user data",doc.data());
+                        console.log("user data",doc.data());
                         setUserData(doc.data());
                     }))
                 }

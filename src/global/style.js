@@ -1,10 +1,10 @@
 module.exports = {
     colors:{
         col1:"white",
-        text4:"#28590c",
+        text1:"#28590c",
         text2:"grey",
         text3:"black",
-        text1: "#97be11",
+        text4: "#97be11",
     },
     title:{
         title1:30,
@@ -42,7 +42,8 @@ module.exports = {
     btn2: {
         width: 150,
         height: 50,
-        backgroundColor: '#E9A11A',
+        // backgroundColor: '#E9A11A',
+        backgroundColor: "#28590c",
         borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center',
@@ -71,7 +72,7 @@ module.exports = {
         zIndex: 10,
     },
     incdecbtn: {
-        backgroundColor: 'red',
+        backgroundColor: 'green',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 50,
